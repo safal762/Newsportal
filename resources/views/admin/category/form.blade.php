@@ -11,16 +11,19 @@
         @csrf
         <div class="row">
         <div class="col-6">
-            <label for="title">Title</label>
-            <input type="text" name="title" id="title" class="form-control mt-2">
+            <label for="title">Title*</label>
+            <input type="text" name="title" id="title" class="form-control mt-2" value="{{ old('title') }}">
+            @error('title')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
-        <div class="col-6" >
-            <label for="slug">Slug</label>
-            <input type="text" name="slug" id="slug" class="form-control mt-2">
-        </div>
+        
         <div class="col-6">
-            <label for="position">position</label>
-            <input type="text" name="position" id="position" class="form-control mt-2">
+            <label for="position">position*</label>
+            <input type="number" name="position" id="position" class="form-control mt-2" value="{{ $position }}">
+            @error('position')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
         <div class="col-12">
             <label for="meta_keywords">meta_keywords</label>

@@ -20,6 +20,8 @@
   <link rel="stylesheet" href="/assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
 
 <body>
+  @include('sweetalert::alert')
+
   <div class="loader"></div>
   <div id="app">
     <div class="main-wrapper main-wrapper-1">

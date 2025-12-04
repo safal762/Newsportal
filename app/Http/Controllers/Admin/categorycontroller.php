@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\category;
 use Illuminate\Http\Request;
 
 class categorycontroller extends Controller
@@ -12,7 +13,8 @@ class categorycontroller extends Controller
      */
     public function index()
     {
-        return view('admin.category.table');
+        $catogery= category::all();
+        return view('admin.category.table',compact('catogery'));
     }
 
     /**
@@ -20,7 +22,8 @@ class categorycontroller extends Controller
      */
     public function create()
     {
-    return view('admin.category.form');
+        $position= category::max('position')+1;
+    return view('admin.category.form',compact('position'));
     }
 
     /**
@@ -28,7 +31,20 @@ class categorycontroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'=>'required|max:40|unique:categories,title',
+            'position'=>'required|numeric|min:1',
+
+        ]);
+        $catogery=new category();
+        $catogery->title=$request->title;
+        $catogery->slug=str()->slug($request->title);
+        $catogery->position=$request->position;
+        $catogery->meta_keywords=$request->meta_keywords;
+        $catogery->meta_description=$request->meta_description;
+        $catogery->save();
+        toast('catogery created sucessfully','success');
+        return redirect()->route('admin.catogery.index');
     }
 
     /**
@@ -44,7 +60,8 @@ class categorycontroller extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $edit_data= category::find($id);
+        return view('admin.category.edit',compact('edit_data'));
     }
 
     /**
@@ -52,7 +69,21 @@ class categorycontroller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+                $request->validate([
+            'title'=>'required|max:40',
+            'position'=>'required|numeric|min:1',
+
+        ]);
+        $catogery= category::find($id);
+        $catogery->title=$request->title;
+        $catogery->slug=str()->slug($request->title);
+        $catogery->position=$request->position;
+        $catogery->meta_keywords=$request->meta_keywords;
+        $catogery->meta_description=$request->meta_description;
+        $catogery->visible=$request->visible;
+        $catogery->save();
+        toast('catogery updated sucessfully','success');
+        return redirect()->route('admin.catogery.index');
     }
 
     /**
@@ -60,6 +91,9 @@ class categorycontroller extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $catogery=category::find($id);
+        $catogery->delete();
+        toast('catogery deleted sucessfully','success');
+        return redirect()->back();
     }
 }
