@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->boolean('views')->default(false);
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->longText('description');
             $table->boolean('visible')->default(true);
             $table->boolean('trending')->default(false);
-            $table->string('meta_keywords');
-            $table->longText('title_description');
+            $table->string('meta_keywords')->nullable();
+            $table->longText('title_description')->nullable();
             $table->longText('writer_name');
             $table->timestamps();
         });
