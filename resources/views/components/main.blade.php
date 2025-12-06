@@ -26,6 +26,10 @@
               <a href="{{ route('admin.artical.index') }}" class="nav-link"><i data-feather="file-text"></i><span>artical</span></a>
              
             </li>
+            <li class="dropdown {{ Request::routeIs('admin.advertise*') ? 'active' : '' }}">
+              <a href="{{ route('admin.advertise.index') }}" class="nav-link"><i data-feather="image"></i><span>advertise</span></a>
+             
+            </li>
             
               </ul>
           

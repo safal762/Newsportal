@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\articlecontroller;
 use App\Http\Controllers\Admin\categorycontroller;
+use App\Http\Controllers\Admin\NewsAdvertiseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,5 @@ Route::middleware('auth')->group(function () {
 });
 Route::resource('/admin/catogery',categorycontroller::class)->names('admin.catogery');
 route::resource('/admin/article',articlecontroller::class)->names('admin.artical');
+Route::resource('/admin/advertise',NewsAdvertiseController::class)->names('admin.advertise');
 require __DIR__.'/auth.php';
