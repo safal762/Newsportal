@@ -22,6 +22,10 @@
               <a href="{{ route('admin.catogery.index') }}" class="nav-link"><i data-feather="tag"></i><span>Category</span></a>
              
             </li>
+             <li class="dropdown {{ Request::routeIs('admin.artical*') ? 'active' : '' }}">
+              <a href="{{ route('admin.artical.index') }}" class="nav-link"><i data-feather="file-text"></i><span>artical</span></a>
+             
+            </li>
             
               </ul>
           
