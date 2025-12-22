@@ -109,7 +109,7 @@
             </div>
         </div>
  <div class="container mx-auto px-4 py-12 max-w-7xl">
-    @foreach ($catogery as $catogerys)
+    @foreach ($cat as $catogerys)
         @php
             $latestArticle = $catogerys->articles()->orderBy('id', 'desc')->first();
         @endphp

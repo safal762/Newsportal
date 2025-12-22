@@ -41,7 +41,7 @@ class NewsAdvertiseController extends Controller
         if($image){
             $file_name=time().'.'.$image->getClientOriginalExtension();
             $image->move('images/',$file_name);
-            $advertise->image="images/.$file_name";
+            $advertise->image="images/$file_name";
         }
         $advertise->save();
         toast('advertise created sucessfully','success');

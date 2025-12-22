@@ -12,14 +12,27 @@ use Illuminate\Support\Facades\View;
 
 class frontendcontroller extends Controller
 {
-    public function home(){
-        $catogery=category::orderBy('position','asc')->where('visible',1)->get();
-        $article=article::get();
-        $advertise=Advertise::where('expire_date','>=',Carbon::today())->get();
+
+    public function __construct()
+    {
+         $catogery=category::orderBy('position','asc')->where('visible',1)->get();
+       $advertise=Advertise::where('expire_date','>=',Carbon::today())->get();
         View::share([
             'cat'=>$catogery,
             'advertise'=>$advertise,
         ]);
-        return view('frontend.home',compact('article','catogery'));
     }
+    
+    public function home(){
+
+        $article=article::get();
+        return view('frontend.home',compact('article'));
+    }
+
+    public function catogerys($slug){
+        $cats=category::where('slug',$slug)->firstOrFail()  ;
+        $arts=$cats->articles()->latest()->get();
+        return view('frontend.catogery',compact('cats','arts'));
+    }
+
 }

@@ -15,7 +15,7 @@
                 
                 <a href="/"><li>home</li></a>
                    @foreach ($cat as $item)
-       <a href="/"><li>{{ $item->title }}</li></a>
+       <a href="{{ route('catogery.page',$item->slug) }}"><li>{{ $item->title }}</li></a>
     @endforeach
             </ul>
 
