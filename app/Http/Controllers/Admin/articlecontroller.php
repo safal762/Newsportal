@@ -32,27 +32,32 @@ class articlecontroller extends Controller
      */
     public function store(Request $request)
     {
-         $request->validate([
-            'title'=>'required|max:40|unique:articles,title',
+     $request->validate([
+        'title' => 'required|max:400|unique:articles,title',
+    ]);
 
-        ]);
-    $article=new article();
-    $article->title=$request->title;
-    $article->slug=str()->slug($request->title);
-    $article->meta_keywords=$request->meta_keywords;
-    $article->title_description=$request->title_description;
-    $article->description=$request->description;
-    $article->writer_name=$request->writer_name;
-    $image=$request->image;
-    if($image){
-        $file_name=time().'.'.$image->getClientOriginalExtension()
-;
-        $image->move('/images',$file_name);
-        $article->image= "/images.$file_name";
+    $article = new Article(); // Class name corrected
+    $article->title = $request->title;
+    $article->slug = str()->slug($request->title);
+    $article->meta_keywords = $request->meta_keywords;
+    $article->title_description = $request->title_description;
+    $article->description = $request->description;
+    $article->writer_name = $request->writer_name;
+
+    $image = $request->image;
+    if ($image) {
+        $file_name = time() . '.' . $image->getClientOriginalExtension();
+        $image->move('images/', $file_name);
+        $article->image = "images/" . $file_name; // fixed path
     }
+
     $article->save();
-    $article->categories()->attach($request->catogery);
-    toast('article published sucessfully','success');
+
+    if ($request->has('catogery')) { // check if category exists
+        $article->categories()->attach($request->catogery);
+    }
+
+    toast('Article published successfully', 'success');
     return redirect()->route('admin.artical.index');
 
     }
@@ -83,27 +88,38 @@ class articlecontroller extends Controller
     public function update(Request $request, string $id)
     {
             $request->validate([
-            'title'=>'required|max:40',
-        ]);
-        $article= article::find($id);
-    $article->title=$request->title;
-    $article->slug=str()->slug($request->title);
-    $article->meta_keywords=$request->meta_keywords;
-    $article->title_description=$request->title_description;
-    $article->description=$request->description;
-      $article->visible=$request->visible;
-        $article->trending=$request->trending;
-    $article->writer_name=$request->writer_name;
-    $image=$request->image;
-    if($image){
-        $file_name=time().'.'.$image->getClientOriginalExtension()
-;
-        $image->move('/images',$file_name);
-        $article->image= "/images.$file_name";
+        'title' => 'required|max:400',
+    ]);
+
+    $article = Article::find($id);
+    if (!$article) {
+        toast('Article not found', 'error');
+        return redirect()->back();
     }
+
+    $article->title = $request->title;
+    $article->slug = str()->slug($request->title);
+    $article->meta_keywords = $request->meta_keywords;
+    $article->title_description = $request->title_description;
+    $article->description = $request->description;
+    $article->writer_name = $request->writer_name;
+    $article->visible = $request->visible ?? 0; // default 0 if null
+    $article->trending = $request->trending ?? 0; // default 0 if null
+
+    $image = $request->image;
+    if ($image) {
+        $file_name = time() . '.' . $image->getClientOriginalExtension();
+        $image->move('images/', $file_name);
+        $article->image = "images/" . $file_name; // fixed path
+    }
+
     $article->save();
-      $article->categories()->sync($request->catogery);
-    toast('article updated sucessfully','success');
+
+    if ($request->has('catogery')) {
+        $article->categories()->sync($request->catogery);
+    }
+
+    toast('Article updated successfully', 'success');
     return redirect()->route('admin.artical.index');
     }
 

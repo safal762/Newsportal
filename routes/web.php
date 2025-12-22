@@ -3,13 +3,10 @@
 use App\Http\Controllers\admin\articlecontroller;
 use App\Http\Controllers\Admin\categorycontroller;
 use App\Http\Controllers\Admin\NewsAdvertiseController;
+use App\Http\Controllers\frontend\frontendcontroller;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get("/",[frontendcontroller::class,'home'])->name('home.page');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

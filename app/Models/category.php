@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class category extends Model
 {
-    public function  categories(){
-        return $this->belongsToMany(article::class);
+    public function  articles(){
+        return $this->belongsToMany(Article::class);
     }
 }
