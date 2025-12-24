@@ -79,8 +79,12 @@
                 Latest News
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                @foreach($article as $articles)
+
+                     @foreach($article as $articles)
+                          
+
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-3 transition-all duration-400">
+                                                   <a href="{{ route('news',$articles->slug) }}">
                         <!-- News Image -->
                         <div class="h-64 overflow-hidden">
                             <img src="{{ asset($articles->image) }}"
@@ -104,9 +108,12 @@
                                 Published on {{ now()->format('M j, Y') }}
                             </div>
                         </div>
+                    </a>
                     </div>
                 @endforeach
+                
             </div>
+               
         </div>
  <div class="container mx-auto px-4 py-12 max-w-7xl">
     @foreach ($cat as $catogerys)
